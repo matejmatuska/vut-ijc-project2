@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX_LEN 512
+#define MAX_LEN 12 // 510 + \n + \0
 
 // creates string buffer of the specified size
 // returns the buffer or NULL if error occured
@@ -76,6 +76,7 @@ void tail(unsigned n, FILE *file)
     buffer_free(buffer, buff_size);
 }
 
+// prints all lines beggining from line number "line num"
 void from_line(unsigned line_num, FILE *file)
 {
     unsigned line = 0; // 1 based

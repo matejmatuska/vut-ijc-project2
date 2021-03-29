@@ -1,17 +1,15 @@
 CFLAGS= -std=c99 -Wall -Wextra -pedantic -g
 
 .PHONY: all
-all: tail
+all: tail libhtab.a wordcount
 
 tail: tail.o
 
 wordcount: wordcount.o libhtab.a
 	gcc $< -L. -o $@ -lhtab
 
-libhtab.a: htab_init.o htab_size.o htab_bucket_count.o
-	ar rcs $@ $<
-
-libhtab.so: htab_size.o htab_bucket_count.o
+libhtab.a: htab_hash_func.o htab_init.o htab_size.o htab_bucket_count.o
+	ar rcs $@ $^
 
 htab_init.o: htab_init.c htab.h htab_internal.h
 htab_size.o: htab_size.c htab.h htab_internal.h
@@ -23,5 +21,5 @@ pack:
 
 .PHONY: clean
 clean:
-	-rm -f tail *.o
+	-rm -f *.o tail wordcount
 

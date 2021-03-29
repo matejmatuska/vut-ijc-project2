@@ -97,7 +97,7 @@ bool htab_erase(htab_t *t, htab_key_t key);
  * @param t the hash table
  * @param f the function to be called on each record
  */
-void htab_for_each(const htab_key_t *t, void (*f)(htab_pair_t *data));
+void htab_for_each(const htab_t *t, void (*f)(htab_pair_t *data));
 
 /**
  * Clears all record in the hash table

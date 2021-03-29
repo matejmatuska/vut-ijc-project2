@@ -12,7 +12,7 @@ struct htab_item {
 struct htab {
     size_t size;
     size_t arr_size;
-    struct htab_item arr[];
+    struct htab_item *arr[];
 };
 
 #endif // _HTAB_INTERNAL_

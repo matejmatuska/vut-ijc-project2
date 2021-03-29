@@ -42,10 +42,6 @@ htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key)
         t->size++;
         return &(item->pair);
     }
-    else
-    {
-        return &(tmp->pair);
-    }
 
     while (tmp->next != NULL) // bucket is not empty, search for item
     {

@@ -43,20 +43,22 @@ htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key)
         return &(item->pair);
     }
 
-    while (tmp->next != NULL) // bucket is not empty, search for item
+    struct htab_item *prev = NULL;
+    while (tmp != NULL) // bucket is not empty, search for item
     {
         if (strcmp(tmp->pair.key, key) == 0)
             return &(tmp->pair); // item found, reuturn it
 
+        prev = tmp;
         tmp = tmp->next;
     }
 
     // item wasnt found, insert it at the end of the linked list
-    tmp->next = htab_item_init(key);
+    prev->next = htab_item_init(key);
     if (tmp->next != NULL)
     {
         t->size++;
-        return &(tmp->next->pair);
+        return &(prev->next->pair);
     }
 
     return NULL;

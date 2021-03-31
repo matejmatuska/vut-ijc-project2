@@ -8,7 +8,7 @@
 // initial value of value is 0
 struct htab_item *htab_item_init(htab_key_t key)
 {
-    struct htab_item *item = malloc(sizeof(struct htab_item)); 
+    struct htab_item *item = malloc(sizeof(struct htab_item));
     if (item != NULL)
     {
         char *tmp = malloc(strlen(key) + 1);
@@ -24,10 +24,14 @@ struct htab_item *htab_item_init(htab_key_t key)
 
 htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key)
 {
-    if (t == NULL || key == NULL)
+    if (t == NULL)
     {
-        //TODO args checking
-        fprintf(stderr, "htab_lookup_add: null arg\n");
+        fprintf(stderr, "htab_lookup_add: table is NULL\n");
+        return NULL;
+    }
+    if (key == NULL)
+    {
+        fprintf(stderr, "htab_lookup_add: key is NULL\n");
         return NULL;
     }
 
@@ -36,7 +40,7 @@ htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key)
 
     if (tmp == NULL)
     {
-        // bucket is empty insert the new item directly
+        // bucket is empty, insert the new item directly
         struct htab_item *item = htab_item_init(key);
         t->arr[index] = item;
         t->size++;

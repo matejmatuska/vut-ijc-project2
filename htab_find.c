@@ -5,10 +5,14 @@
 
 htab_pair_t *htab_find(htab_t *t, htab_key_t key)
 {
-    if (t == NULL || key == NULL)
+    if (t == NULL)
     {
-        //TODO args checking
-        fprintf(stderr, "htab_find: null argument\n");
+        fprintf(stderr, "htab_find: table is NULL\n");
+        return NULL;
+    }
+    if (key == NULL)
+    {
+        fprintf(stderr, "htab_find: key is NULL\n");
         return NULL;
     }
 
@@ -18,7 +22,7 @@ htab_pair_t *htab_find(htab_t *t, htab_key_t key)
     while (tmp != NULL)
     {
         if (strcmp(tmp->pair.key, key) == 0)
-            // found the item 
+            // found the item
             return &(tmp->pair);
 
         tmp = tmp->next;

@@ -1,2 +1,2 @@
 # IJC - Jazyk C (The C Language)
-*Project 2*
+**Project 2**

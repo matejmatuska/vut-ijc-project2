@@ -55,7 +55,7 @@ htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key)
 
     // item wasnt found, insert it at the end of the linked list
     prev->next = htab_item_init(key);
-    if (tmp->next != NULL)
+    if (prev->next != NULL)
     {
         t->size++;
         return &(prev->next->pair);

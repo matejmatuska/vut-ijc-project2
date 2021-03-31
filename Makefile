@@ -6,9 +6,9 @@ all: tail libhtab.a wordcount
 tail: tail.o
 
 wordcount: wordcount.o libhtab.a
-	gcc $< -L. -o $@ -lhtab
+	gcc $^ -L. -o $@ -lhtab
 
-libhtab.a: htab_hash_func.o htab_init.o htab_size.o htab_bucket_count.o htab_find.o htab_lookup_add.o htab_for_each.o
+libhtab.a: htab_hash_func.o htab_init.o htab_size.o htab_bucket_count.o htab_find.o htab_lookup_add.o htab_for_each.o htab_erase.o htab_clear.o htab_free.o
 	ar rcs $@ $^
 
 htab_init.o: htab_init.c htab.h htab_internal.h
@@ -17,6 +17,12 @@ htab_bucket_count.o: htab_bucket_count.c htab.h htab_internal.h
 htab_find.o: htab_find.c htab.h htab_internal.h
 htab_lookup_add.o: htab_lookup_add.c htab.h htab_internal.h
 htab_for_each.o: htab_for_each.c htab.h htab_internal.h
+
+htab_erase.o: htab_erase.c htab.h htab_internal.h
+
+
+htab_clear.o: htab_clear.c htab.h htab_internal.h
+htab_free.o: htab_free.c htab.h
 
 .PHONY: pack
 pack:

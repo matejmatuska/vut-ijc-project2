@@ -12,7 +12,6 @@ void htab_clear(htab_t *t)
         return;
     }
 
-    // for each bucket
     for (size_t i = 0; i < t->arr_size; i++)
     {
         struct htab_item *head = t->arr[i];
@@ -21,8 +20,11 @@ void htab_clear(htab_t *t)
             struct htab_item *tmp = head;
             head = tmp->next;
 
-            free((void*)tmp->pair.key);
+            free((char*)tmp->pair.key);
             free(tmp);
         }
     }
+
+    t->arr_size = 0;
+    t->size = 0;
 }

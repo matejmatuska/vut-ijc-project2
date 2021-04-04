@@ -1,12 +1,25 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #include "io.h"
 
 int read_word(char *s, int max, FILE *f)
 {
-    int len = 0;
+    if (max < 1)
+    {
+        fprintf(stderr, "Error: read_word: max must be > 0\n");
+        return 0;
+    }
+    if (f == NULL)
+    {
+        fprintf(stderr, "Error: read_word: f is NULL\n");
+        return 0;
+    }
 
+    static bool warn = true;
+
+    int len = 0;
     int c;
     while ((c = fgetc(f)) != EOF)
     {
@@ -27,10 +40,15 @@ int read_word(char *s, int max, FILE *f)
 
         if (len == max - 1)
         {
-            // exceeded max chars, read remaining chars
-            int ch = fgetc(f); //TODO myabe use the one from while
-            while (!isspace(ch) && ch != EOF)
-                ch = fgetc(f);
+            // exceeded max chars
+            if (warn)
+            {
+                fprintf(stderr, "Warning: read_word: word exceeded max word lenght!\n");
+                warn = false;
+            }
+
+            // read remaining chars
+            while ((c = fgetc(f)) != EOF && !isspace(c));
 
             s[len + 1] = '\0';
             return len;

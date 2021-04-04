@@ -20,4 +20,4 @@
  */
 int read_word(char *s, int max, FILE *f);
 
-#endif
+#endif // _IO_H_

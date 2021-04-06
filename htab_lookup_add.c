@@ -24,17 +24,6 @@ struct htab_item *htab_item_init(htab_key_t key)
 
 htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key)
 {
-    if (t == NULL)
-    {
-        fprintf(stderr, "htab_lookup_add: table is NULL\n");
-        return NULL;
-    }
-    if (key == NULL)
-    {
-        fprintf(stderr, "htab_lookup_add: key is NULL\n");
-        return NULL;
-    }
-
     size_t index = htab_hash_function(key) % htab_bucket_count(t);
     struct htab_item *tmp = t->arr[index]; // get the bucket
 

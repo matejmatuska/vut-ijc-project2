@@ -5,12 +5,6 @@
 
 void htab_for_each(const htab_t *t, void (*f)(htab_pair_t *data))
 {
-    if (t == NULL)
-    {
-        fprintf(stderr, "htab_for_each: table is NULL\n");
-        return;
-    }
-
     // for each bucket
     for (size_t i = 0; i < t->arr_size; i++)
     {

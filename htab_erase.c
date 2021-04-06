@@ -6,17 +6,12 @@
 
 bool htab_erase(htab_t *t, htab_key_t key)
 {
-    if (t == NULL)
-    {
-        fprintf(stderr, "htab_erase: cannot erase in NULL table\n");
-        return false;
-    }
-
     size_t index = htab_hash_function(key) % htab_bucket_count(t);
     struct htab_item *tmp = t->arr[index];
 
     if (tmp == NULL)
     {
+        // bucket is empty
         return false;
     }
 

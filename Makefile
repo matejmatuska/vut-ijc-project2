@@ -25,7 +25,7 @@ htab_%.o: htab_%.c htab.h htab_internal.h
 
 .PHONY: pack
 pack:
-	 zip xmatus36.zip *.c *.cc *.h Makefile
+	 zip xmatus36.zip *.c *.h Makefile
 
 .PHONY: clean
 clean:

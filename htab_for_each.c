@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include "htab.h"
 #include "htab_internal.h"
 

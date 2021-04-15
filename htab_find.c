@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include "htab.h"
 #include "htab_internal.h"
 
@@ -11,8 +9,7 @@ htab_pair_t *htab_find(htab_t *t, htab_key_t key)
     while (tmp != NULL)
     {
         if (strcmp(tmp->pair.key, key) == 0)
-            // found the item
-            return &(tmp->pair);
+            return &(tmp->pair); // found the item
 
         tmp = tmp->next;
     }

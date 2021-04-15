@@ -1,3 +1,8 @@
+// htab.h
+// Řešení IJC-DU2, příklad 2), 15.4.2021
+// Autor: Matej Matuška, FIT
+// Přeloženo: gcc 10.2.1
+
 /**
  * @file htab.h
  * @brief This header contains hashtable interface definiton

@@ -1,3 +1,8 @@
+// io.c
+// Řešení IJC-DU2, příklad 2), 15.4.2021
+// Autor: Matej Matuška, FIT
+// Přeloženo: gcc 10.2.1
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stdbool.h>

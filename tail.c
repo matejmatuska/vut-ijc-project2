@@ -1,3 +1,8 @@
+// tail.c
+// Řešení IJC-DU2, příklad 1), 15.4.2021
+// Autor: Matej Matuška, FIT
+// Přeloženo: gcc 10.2.1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

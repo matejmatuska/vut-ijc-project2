@@ -1,3 +1,8 @@
+// io.h
+// Řešení IJC-DU2, příklad 2), 15.4.2021
+// Autor: Matej Matuška, FIT
+// Přeloženo: gcc 10.2.1
+
 #ifndef _IO_H_
 #define _IO_H_
 
@@ -9,7 +14,7 @@
  * max - 1 chars are read and remainder is skipped.
  * If end of file is encountered, EOF is returned.
  *
- * Note: Word is a continuos sequence of characters 
+ * @note Word is a continuos sequence of characters 
  * separated by non-whitespace characters
  * isspace is used to determine if character is whitespace
  *

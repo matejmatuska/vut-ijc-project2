@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX_LEN 12 // 510 + \n + \0
+#define MAX_LEN 512 // 510 + \n + \0
 
 // creates string buffer of the specified size
 // returns the buffer or NULL if error occured
@@ -28,11 +28,10 @@ char** buffer_create(unsigned size)
 // prints in reverse order
 void buffer_print(char **buffer, unsigned n)
 {
-    unsigned i = n - 1;
     do
     {
-        printf("%s", buffer[i--]);
-    } while (i != 0);
+        printf("%s", buffer[n--]);
+    } while (n != 0);
 }
 
 // frees the buffer
@@ -49,22 +48,58 @@ void usage()
     fprintf(stderr, "Usage: tail [-n number] [file]\n");
 }
 
-void tail(unsigned n, FILE *file)
+int read_line(char *buff, unsigned max, FILE *f)
 {
-    unsigned buff_size = ++n;
+    static bool warn = true;
+    unsigned len = 0;
+    int c;
+
+    while ((c = fgetc(f)) != EOF)
+    {
+        if (len < max - 2)
+        {
+            buff[len++] = c;
+            if (c == '\n')
+            {
+                buff[len++] = '\0';
+                return len;
+            }
+        }
+        else
+        {
+            if (warn)
+            {
+                fprintf(stderr, "Exceeded line lenght limit!\n");
+                warn = false;
+            }
+
+            // consume remaining chars
+            while ((c = fgetc(f)) != EOF && c != '\n');
+
+            buff[len++] = '\n';
+            buff[len++] = '\0';
+            return len;
+        }
+    }
+    return EOF;
+}
+
+// return true on success, false on failure
+bool tail(unsigned n, FILE *file)
+{
+    unsigned buff_size = n + 1; // we need one more line to read into
 
     char **buffer = buffer_create(buff_size);
     if (buffer == NULL)
     {
         fprintf(stderr, "Failed to allocate buffer!\n");
-        //return EXIT_FAILURE;
-        return; //TODO error handling
+        return false;
     }
 
     unsigned lines_read = 0;
-    while (fgets(buffer[0], MAX_LEN, file))
+    while (read_line(buffer[0], MAX_LEN, file) != EOF)
     {
-        if (lines_read < buff_size)
+        if (lines_read < buff_size - 1)
             lines_read++;
 
         // push all lines down by 1 in the buffer
@@ -74,18 +109,20 @@ void tail(unsigned n, FILE *file)
 
     buffer_print(buffer, lines_read);
     buffer_free(buffer, buff_size);
+    return true;
 }
 
 // prints all lines beggining from line number "line num"
 void from_line(unsigned line_num, FILE *file)
 {
-    unsigned line = 0; // 1 based
+    unsigned line = 1;
     char buff[MAX_LEN];
     while (fgets(buff, MAX_LEN, file))
     {
-        line++;
         if (line >= line_num)
             printf("%s", buff);
+
+        line++;
     }
 }
 
@@ -121,7 +158,7 @@ int main(int argc, char *argv[])
         if (argc == 4)
         {
             from_stdin = false;
-            filename = argv [3];
+            filename = argv[3];
         }
     }
     else if (argc == 2)
@@ -150,8 +187,14 @@ int main(int argc, char *argv[])
 
     if (start_mode)
         from_line(n, file);
-    else
-        tail(n, file);
+    else 
+    {
+        if (!tail(n, file))
+        {
+            fprintf(stderr, "Error: Memory allocation failed!\n");
+            return EXIT_FAILURE;
+        }
+    }
 
     if (!from_stdin)
         fclose(file);

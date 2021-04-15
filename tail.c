@@ -20,7 +20,7 @@ char** buffer_create(unsigned size)
 
     for (unsigned i = 0; i < size; i++)
     {
-        char *line = malloc(MAX_LEN);
+        char *line = calloc(MAX_LEN, 1); // initialize the memory
         if (line == NULL)
             return NULL;
 

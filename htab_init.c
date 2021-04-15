@@ -13,8 +13,7 @@ htab_t *htab_init(size_t n)
     if (n == 0)
         return NULL;
 
-    //TODO calloc or memset or manually?? For now it works
-    htab_t *t = calloc(sizeof(htab_t) + n * sizeof(struct htab_item*), 1);
+    htab_t *t = calloc(1, sizeof(htab_t) + n * sizeof(struct htab_item*));
     if (t != NULL)
     {
         t->size = 0;

@@ -6,6 +6,21 @@
 
 #define MAX_WORD_LEN 128
 
+// hash function used if HASHTEST is defined
+// copied from http://www.cse.yorku.ca/~oz/hash.html - djb2
+#ifdef HASHTEST
+unsigned long hash(unsigned char *str)
+{
+    unsigned long hash = 5381;
+    int c;
+
+    while (c = *str++)
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+    return hash;
+}
+#endif
+
 // prints the given htab item to stdout
 void htab_print(htab_pair_t *item)
 {
@@ -14,7 +29,7 @@ void htab_print(htab_pair_t *item)
 
 int main(void)
 {
-    htab_t *t = htab_init(3500);
+    htab_t *t = htab_init(3500); //TODO choose appropriate size
     if (t == NULL)
     {
         fprintf(stderr, "Failed to allocate hash table\n");
@@ -32,6 +47,12 @@ int main(void)
         }
         item->value++;
     }
+
+#ifdef MOVETEST
+    htab_t *t2 = htab_move(10, t);
+    htab_free(t);
+    t = t2;
+#endif
 
     htab_for_each(t, &htab_print);
 

@@ -3,7 +3,6 @@
 
 #include "htab.h"
 
-//TODO maybe add htab_item typedef
 struct htab_item {
     struct htab_item *next; // points to the next record
     struct htab_pair pair; // public api

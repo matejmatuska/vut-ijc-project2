@@ -11,16 +11,8 @@
 
 int read_word(char *s, int max, FILE *f)
 {
-    if (max < 1)
-    {
-        fprintf(stderr, "Error: read_word: max must be > 0\n");
-        return 0;
-    }
-    if (f == NULL)
-    {
-        fprintf(stderr, "Error: read_word: f is NULL\n");
-        return 0;
-    }
+    if (max < 1 || f == NULL)
+        return -1;
 
     static bool warn = true;
 

@@ -21,6 +21,7 @@ void htab_clear(htab_t *t)
             free((char*)tmp->pair.key);
             free(tmp);
         }
+        t->arr[i] = NULL;
     }
 
     t->arr_size = 0;

@@ -9,6 +9,9 @@
 #include "htab.h"
 #include "io.h"
 
+// I've chosen a prime number to reduce the number of collisions,
+// 4111 should be a good balance between space and speed for small aswell as bigger files
+#define HTAB_SIZE 4111
 #define MAX_WORD_LEN 128
 
 // hash function used if HASHTEST is defined
@@ -34,7 +37,7 @@ void htab_print(htab_pair_t *item)
 
 int main(void)
 {
-    htab_t *t = htab_init(3500); //TODO choose appropriate size
+    htab_t *t = htab_init(HTAB_SIZE);
     if (t == NULL)
     {
         fprintf(stderr, "Failed to allocate hash table\n");

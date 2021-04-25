@@ -150,13 +150,19 @@ int main(int argc, char *argv[])
             n = strtol(argv[2], &rest, 10);
             if (*rest != '\0')
             {
-                fprintf(stderr, "Error: Option -n requires integer argument!\n");
+                fprintf(stderr, "Error: option -n requires integer argument\n");
+                return EXIT_FAILURE;
+            }
+
+            if (n <= 0)
+            {
+                fprintf(stderr, "Error: option -n requires positive integer argument\n");
                 return EXIT_FAILURE;
             }
         }
         else
         {
-            fprintf(stderr, "Error: unexpected argument %s!\n", argv[1]);
+            fprintf(stderr, "Error: unexpected argument %s\n", argv[1]);
             return EXIT_FAILURE;
         }
 
